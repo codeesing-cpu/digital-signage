@@ -85,7 +85,48 @@
 body {
     -webkit-font-smoothing: antialiased;
 }
+@media (max-width: 768px) {
 
+    body {
+        padding: 20px;
+        align-items: flex-start;
+    }
+
+    .container {
+        padding: 25px 20px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    .menu {
+        grid-template-columns: 1fr; /* เรียงปุ่มลงมา */
+        gap: 15px;
+    }
+
+    .menu a {
+        font-size: 1.1rem;
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .back {
+        font-size: 1rem;
+        margin-top: 20px;
+        display: block;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+    }
+}
     </style>
 </head>
 <body>
