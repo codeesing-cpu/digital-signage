@@ -1,0 +1,3 @@
+<img id="preview" src="profile.jpg" class="profile-img">
+
+<input type="file" accept="image/*" onchange="loadImage(event)">

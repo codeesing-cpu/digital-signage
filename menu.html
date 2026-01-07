@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>เมนูหลัก</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+    .menu .full {
+    grid-column: span 2;   /* กิน 2 คอลัมน์ */
+    justify-self: center;  /* จัดให้อยู่กลาง */
+    width: 70%;            /* ความกว้างกำลังสวย */
+}
+
+    .bg-shape {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+}
+
+.bg1 {
+    top: -100px;
+    left: -100px;
+}
+
+.bg2 {
+    bottom: -120px;
+    right: -120px;
+    background: linear-gradient(135deg, #ff512f, #dd2476);
+}
+        body {
+    margin: 0;
+    font-family: 'Kanit', sans-serif;
+    background: radial-gradient(circle at top left, #1a2a6c, #16222a 40%, #0f2027 70%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+        .container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 25px;
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+       .menu a {
+    padding: 25px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 18px;
+    font-size: 1.2rem;
+    transition: transform 0.25s, box-shadow 0.25s;
+    box-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
+}
+
+.menu a:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 0 30px rgba(0, 198, 255, 0.8);
+}
+        .menu a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .back {
+            margin-top: 30px;
+            display: inline-block;
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+    
+</head>
+<body>
+<div class="bg-shape bg1"></div>
+<div class="bg-shape bg2"></div>
+
+<div class="container">
+    <h1>เมนูประชาสัมพันธ์</h1>
+
+    <div class="menu">
+        <a href="#">📢 ข่าวประกาศ</a>
+        <a href="#">📅 ตารางกิจกรรม</a>
+   <a href="creator.html" class="full">📞 ผู้จัดทำเว็ปไซค์</a>
+    </div>
+
+    <a href="index.html" class="back">← กลับหน้าหลัก</a>
+</div>
+
+</body>
+</html>
