@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>จัดการข่าว</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    font-family: Kanit, sans-serif;
+    background: #16222a;
+    color: white;
+    margin: 0;
+}
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: none;
+}
+button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: #00c6ff;
+    color: black;
+    cursor: pointer;
+}
+.card {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 15px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>🛠 จัดการข่าวประกาศ</h1>
+
+<input id="title" placeholder="หัวข้อข่าว">
+<textarea id="text" placeholder="รายละเอียดข่าว"></textarea>
+<input id="media" placeholder="URL รูปภาพหรือวิดีโอ (ไม่ใส่ก็ได้)">
+<button onclick="addNews()">➕ เพิ่มข่าว</button>
+
+<div id="list"></div>
+
+<a href="menu.html">⬅ กลับเมนู</a>
+</div>
+
+<script>
+let news = JSON.parse(localStorage.getItem("news")) || [];
+const list = document.getElementById("list");
+
+function render() {
+    list.innerHTML = "";
+    news.forEach((n, i) => {
+        list.innerHTML += `
+        <div class="card">
+            <b>${n.title}</b>
+            <p>${n.text}</p>
+            <button onclick="del(${i})">🗑 ลบ</button>
+        </div>`;
+    });
+}
+
+function addNews() {
+    const title = titleInput.value;
+    const text = textInput.value;
+    const mediaUrl = mediaInput.value;
+
+    let media = "";
+    if (mediaUrl.includes("mp4")) {
+        media = `<video controls src="${mediaUrl}"></video>`;
+    } else if (mediaUrl) {
+        media = `<img src="${mediaUrl}">`;
+    }
+
+    news.unshift({ title, text, media });
+    localStorage.setItem("news", JSON.stringify(news));
+    render();
+}
+
+function del(i) {
+    news.splice(i,1);
+    localStorage.setItem("news", JSON.stringify(news));
+    render();
+}
+
+const titleInput = document.getElementById("title");
+const textInput = document.getElementById("text");
+const mediaInput = document.getElementById("media");
+
+render();
+</script>
+
+</body>
+</html>

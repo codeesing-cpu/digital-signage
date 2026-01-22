@@ -144,6 +144,13 @@ body {
     </style>
 </head>
 <body>
+    <img src="loading.gif" alt="Loading">
+    <!-- Loading Screen -->
+<div id="loading">
+    <img src="loading.gif" alt="Loading">
+    <p>กำลังโหลดระบบ...</p>
+</div>
+
 
  <div class="container">
     <h1>Digital Signage</h1>
@@ -151,7 +158,7 @@ body {
 
     <p>
         ระบบป้ายประชาสัมพันธ์อัจฉริยะสำหรับแสดงข่าวสาร ประกาศ และข้อมูลสำคัญ
-        แบบเรียลไทม์ เหมาะสำหรับสถานศึกษา องค์กร และหน่วยงานต่าง ๆ
+        แบบเรียลไทม์ เหมาะสำหรับสถานศึกษา
     </p>
 
     <!-- วันที่อยู่บน -->
@@ -160,7 +167,10 @@ body {
     <!-- เวลาอยู่ล่าง -->
     <div class="time" id="clock">--:--:--</div>
     
-    <a href="menu.html" class="btn">ดูประกาศล่าสุด</a>
+    <a href="menu.html" class="btn">👀 เข้าชมข้อมูล</a>
+<br><br>
+<a href="login.html" class="btn">🔐 ผู้ดูแลระบบ</a>
+
 </div>
 
    <script>
@@ -183,6 +193,17 @@ function updateClock() {
 
 setInterval(updateClock, 1000);
 updateClock();
+</script>
+<script>
+window.addEventListener("load", () => {
+    const loading = document.getElementById("loading");
+    loading.style.opacity = "0";
+    loading.style.pointerEvents = "none";
+
+    setTimeout(() => {
+        loading.style.display = "none";
+    }, 600);
+});
 </script>
 
 </body>
