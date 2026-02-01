@@ -1,101 +1,179 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<title>จัดการข่าว</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<title>จัดการกิจกรรม</title>
+
 <style>
-body {
-    font-family: Kanit, sans-serif;
-    background: #16222a;
-    color: white;
-    margin: 0;
+    .card{
+    background:#ffffff;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
 }
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
+
+.card img, .card video{
+    width:100%;
+    border-radius:12px;
+    margin-top:10px;
 }
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    border: none;
+
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    margin:0;
+    padding:0;
+    color:white;
 }
-button {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    background: #00c6ff;
-    color: black;
-    cursor: pointer;
+
+/* กล่องหลัก */
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:40px 20px;
 }
-.card {
-    background: rgba(255,255,255,0.1);
-    padding: 15px;
-    border-radius: 15px;
-    margin-top: 15px;
+
+/* หัวข้อ */
+h1{
+    margin-bottom:20px;
+}
+
+/* input */
+input, textarea{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:none;
+    margin-bottom:12px;
+    font-size:15px;
+}
+
+/* ปุ่ม */
+button{
+    background:#00c6ff;
+    border:none;
+    color:white;
+    padding:12px 20px;
+    border-radius:25px;
+    cursor:pointer;
+    font-size:15px;
+    margin-right:8px;
+}
+
+button:hover{
+    opacity:.85;
+}
+
+/* การ์ดกิจกรรม */
+.card{
+    background:white;
+    color:#333;
+    border-radius:18px;
+    padding:18px;
+    margin-top:15px;
+    box-shadow:0 6px 18px rgba(0,0,0,.3);
+}
+
+.card img, .card video{
+    width:100%;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+/* ปุ่มกลับ */
+.back{
+    display:inline-block;
+    margin-top:15px;
+    color:#fff;
+    text-decoration:none;
+    background:#7b61ff;
+    padding:10px 18px;
+    border-radius:20px;
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
-<h1>🛠 จัดการข่าวประกาศ</h1>
 
-<input id="title" placeholder="หัวข้อข่าว">
-<textarea id="text" placeholder="รายละเอียดข่าว"></textarea>
-<input id="media" placeholder="URL รูปภาพหรือวิดีโอ (ไม่ใส่ก็ได้)">
-<button onclick="addNews()">➕ เพิ่มข่าว</button>
+<h1>📢 จัดการกิจกรรม</h1>
 
+<input id="title" placeholder="ชื่อกิจกรรม">
+<textarea id="text" placeholder="รายละเอียดกิจกรรม"></textarea>
+<input type="file" id="media" accept="image/*,video/*">
+
+<button onclick="addEvent()">➕ เพิ่มกิจกรรม</button>
+
+<br>
+
+<!-- ปุ่มกลับหน้าข่าว -->
+<a href="admin-news.html" class="back">⬅ กลับหน้าจัดการข่าวประกาศ</a>
+
+<!-- แสดงรายการ -->
 <div id="list"></div>
 
-<a href="menu.html">⬅ กลับเมนู</a>
 </div>
 
 <script>
-let news = JSON.parse(localStorage.getItem("news")) || [];
+let events = JSON.parse(localStorage.getItem("events")) || [];
 const list = document.getElementById("list");
 
-function render() {
+function render(){
     list.innerHTML = "";
-    news.forEach((n, i) => {
-        list.innerHTML += `
-        <div class="card">
-            <b>${n.title}</b>
-            <p>${n.text}</p>
-            <button onclick="del(${i})">🗑 ลบ</button>
-        </div>`;
+
+    events.forEach((e,i)=>{
+        const div = document.createElement("div");
+        div.className = "card";
+
+      div.innerHTML = `
+<div class="card">
+    <h3>${e.title}</h3>
+    <p>${e.text}</p>
+    ${e.media || ""}
+    <br>
+    <button onclick="del(${i})">ลบ</button>
+</div>
+`;
+
+        list.appendChild(div);
     });
 }
 
-function addNews() {
-    const title = titleInput.value;
-    const text = textInput.value;
-    const mediaUrl = mediaInput.value;
+function addEvent(){
+    const title = document.getElementById("title").value;
+    const text = document.getElementById("text").value;
+    const file = document.getElementById("media").files[0];
 
     let media = "";
-    if (mediaUrl.includes("mp4")) {
-        media = `<video controls src="${mediaUrl}"></video>`;
-    } else if (mediaUrl) {
-        media = `<img src="${mediaUrl}">`;
+
+    if(file){
+        const url = URL.createObjectURL(file);
+
+        if(file.type.startsWith("video")){
+            media = `<video controls src="${url}"></video>`;
+        }else{
+            media = `<img src="${url}">`;
+        }
     }
 
-    news.unshift({ title, text, media });
-    localStorage.setItem("news", JSON.stringify(news));
+    events.unshift({title,text,media});
+    localStorage.setItem("events", JSON.stringify(events));
+
     render();
+
+    // เคลียร์ input
+    document.getElementById("title").value="";
+    document.getElementById("text").value="";
+    document.getElementById("media").value="";
 }
 
-function del(i) {
-    news.splice(i,1);
-    localStorage.setItem("news", JSON.stringify(news));
+function del(i){
+    events.splice(i,1);
+    localStorage.setItem("events", JSON.stringify(events));
     render();
 }
-
-const titleInput = document.getElementById("title");
-const textInput = document.getElementById("text");
-const mediaInput = document.getElementById("media");
 
 render();
 </script>

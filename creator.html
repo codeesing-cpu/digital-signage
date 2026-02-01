@@ -1,170 +1,133 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ผู้จัดทำเว็บไซต์</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ผู้จัดทำเว็บไซต์</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <style>
-        [contenteditable="true"] {
-    outline: none;
-    cursor: text;
+<style>
+body{
+    margin:0;
+    font-family:'Kanit',sans-serif;
+    background: radial-gradient(circle at top left,#1a2a6c,#16222a,#0f2027);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    color:#fff;
 }
 
-[contenteditable="true"]:hover {
-    background: rgba(255,255,255,0.08);
-    border-radius: 8px;
-}
-        body {
-            margin: 0;
-            font-family: 'Kanit', sans-serif;
-            background: radial-gradient(circle at top left, #1a2a6c, #16222a, #0f2027);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 25px;
-            text-align: center;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #00c6ff;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        .name {
-            font-size: 1.6rem;
-            font-weight: 600;
-        }
-
-        .position {
-            font-size: 1.1rem;
-            color: #e0e0e0;
-            margin-bottom: 25px;
-        }
-
-        .info {
-            font-size: 1rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        .back {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(to right, #0072ff, #00c6ff);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 30px;
-        }
-        .back {
-    display: inline-block;
-    margin-top: 25px;
-    padding: 12px 30px;
-    background: linear-gradient(to right, #0072ff, #00c6ff);
-    color: #fff;
-    text-decoration: none;
-    border-radius: 30px;
-    transition: transform 0.2s, box-shadow 0.2s;
+/* ⭐ จัด 2 คนเรียงข้างกัน */
+.container{
+    display:flex;
+    gap:30px;
+    flex-wrap:wrap;
+    justify-content:center;
 }
 
-.back:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+.card{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+    padding:35px;
+    border-radius:25px;
+    text-align:center;
+    width:320px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);
 }
-@media (max-width: 600px) {
-    body {
-        padding: 20px 10px;
-        align-items: flex-start;
-    }
 
-    .card {
-        width: 100%;
-        max-width: 100%;
-        padding: 25px 20px;
-        border-radius: 20px;
-    }
+.profile-img{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #00c6ff;
+    margin-bottom:15px;
+}
 
-    .profile-img {
-        width: 120px;
-        height: 120px;
-    }
+h1{
+    width:100%;
+    text-align:center;
+    margin-bottom:30px;
+}
 
-    h1 {
-        font-size: 1.5rem;
-    }
+.name{
+    font-size:1.4rem;
+    font-weight:600;
+}
 
-    .name {
-        font-size: 1.4rem;
-    }
+.position{
+    color:#e0e0e0;
+    margin-bottom:20px;
+}
 
-    .position {
-        font-size: 1rem;
-    }
+.info{
+    line-height:1.6;
+    font-size:0.95rem;
+}
 
-    .info {
-        font-size: 0.95rem;
-    }
+.back{
+    display:block;
+    margin-top:35px;
+    padding:12px;
+    background:linear-gradient(to right,#0072ff,#00c6ff);
+    border-radius:25px;
+    text-decoration:none;
+    color:#fff;
+    text-align:center;
+}
 
-    .back {
-        width: 100%;
-        display: block;
-        text-align: center;
+@media(max-width:700px){
+    .container{
+        flex-direction:column;
+        align-items:center;
     }
 }
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-    </style>
+</style>
 </head>
+
+
 <body>
 
-<div class="card">
-    <img id="preview" src="profile.jpg" class="profile-img">
+<h1>ผู้จัดทำเว็บไซต์</h1>
 
-    <h1>ผู้จัดทำเว็บไซต์</h1>
+<div class="container">
 
-    <div class="name" contenteditable="true">นายจิรเดช ดีสิงห์</div>
-    <div class="position" contenteditable="true">นักเรียน / นักพัฒนาเว็บไซต์</div>
+    <!-- ⭐ คนที่ 1 -->
+    <div class="card">
+        <!-- ใส่รูป profile1.jpg -->
+        <img src="profile1.jpg" class="profile-img">
 
-    <div class="info" contenteditable="true">
-        โครงงานป้ายประชาสัมพันธ์อัจฉริยะ<br>
-        สาขาเทคโนโลยีสารสนเทศ<br>
-        วิทยาลัยเทคนิค
+        <div class="name">นายจิรเดช ดีสิงห์</div>
+        <div class="position">นักเรียน / นักพัฒนาเว็บไซต์</div>
+
+        <div class="info">
+            โครงงานป้ายประชาสัมพันธ์อัจฉริยะ<br>
+            สาขาเทคโนโลยีสารสนเทศ<br>
+            วิทยาลัยเทคนิค
+        </div>
     </div>
 
-    <!-- ปุ่มย้อนกลับ -->
-    <a href="menu.html" class="back">← กลับเมนูหลัก</a>
+
+    <!-- ⭐ คนที่ 2 -->
+    <div class="card">
+        <!-- ใส่รูป profile2.jpg -->
+        <img src="profile2.jpg" class="profile-img">
+
+        <div class="name">นายทศวรรษ ฟุ้งลัดดา</div>
+        <div class="position">นักเรียน / นักพัฒนาเว็บไซต์</div>
+
+        <div class="info">
+            โครงงานป้ายประชาสัมพันธ์อัจฉริยะ<br>
+            สาขาเทคโนโลยีสารสนเทศ<br>
+            วิทยาลัยเทคนิค
+        </div>
+    </div>
+
 </div>
 
+<a href="menu.html" class="back">← กลับเมนูหลัก</a>
 
-<input type="file" accept="image/*" onchange="loadImage(event)">
-<script>
-function loadImage(event) {
-    const image = document.getElementById('preview');
-    image.src = URL.createObjectURL(event.target.files[0]);
-}
-</script>
 </body>
+</html>

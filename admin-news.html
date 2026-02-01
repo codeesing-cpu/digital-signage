@@ -5,6 +5,20 @@
 <title>จัดการข่าว</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+    .btn{
+    display:inline-block;
+    padding:10px 18px;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    border-radius:10px;
+    text-decoration:none;
+    margin-bottom:15px;
+    transition:.2s;
+}
+.btn:hover{
+    transform:scale(1.05);
+}
+
 body {
     font-family: Kanit, sans-serif;
     background: #16222a;
@@ -44,9 +58,17 @@ button {
 <div class="container">
 <h1>🛠 จัดการข่าวประกาศ</h1>
 
+
+    <!-- ✅ เพิ่มตรงนี้ -->
+    <a href="admin-events.html" class="btn">📅 ไปหน้าจัดการกิจกรรม</a>
+
+
 <input id="title" placeholder="หัวข้อข่าว">
 <textarea id="text" placeholder="รายละเอียดข่าว"></textarea>
-<input id="media" placeholder="URL รูปภาพหรือวิดีโอ (ไม่ใส่ก็ได้)">
+<input type="file" id="media" accept="image/*,video/*">
+<img id="preview"
+     style="width:300px; display:none; border-radius:10px; margin-top:10px;">
+
 <button onclick="addNews()">➕ เพิ่มข่าว</button>
 
 <div id="list"></div>
@@ -73,31 +95,68 @@ function render() {
 function addNews() {
     const title = titleInput.value;
     const text = textInput.value;
-    const mediaUrl = mediaInput.value;
+  const file = mediaInput.files[0];
+let media = "";
 
-    let media = "";
-    if (mediaUrl.includes("mp4")) {
-        media = `<video controls src="${mediaUrl}"></video>`;
-    } else if (mediaUrl) {
-        media = `<img src="${mediaUrl}">`;
+if (file) {
+    const url = URL.createObjectURL(file);
+
+    if (file.type.startsWith("video")) {
+        media = `<video controls width="300" src="${url}"></video>`;
+    } else {
+        media = `<img width="300" src="${url}">`;
     }
+}
 
     news.unshift({ title, text, media });
     localStorage.setItem("news", JSON.stringify(news));
     render();
 }
 
-function del(i) {
-    news.splice(i,1);
+function addNews() {
+    const title = titleInput.value;
+    const text = textInput.value;
+    const file = mediaInput.files[0];
+
+    let media = "";
+
+    if (file) {
+        const url = URL.createObjectURL(file);
+
+        if (file.type.startsWith("video")) {
+            media = `<video controls width="300" src="${url}"></video>`;
+        } else {
+            media = `<img width="300" src="${url}">`;
+        }
+    }
+
+    news.unshift({ title, text, media });
+
     localStorage.setItem("news", JSON.stringify(news));
+
     render();
+
+    titleInput.value = "";
+    textInput.value = "";
+    mediaInput.value = "";
 }
+/* ====== วางตรงนี้ ====== */
 
-const titleInput = document.getElementById("title");
-const textInput = document.getElementById("text");
-const mediaInput = document.getElementById("media");
+const preview = document.getElementById("preview");
 
-render();
+mediaInput.addEventListener("change", function () {
+    const file = this.files[0];
+
+    if (file && file.type.startsWith("image")) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+    } else {
+        preview.style.display = "none";
+    }
+});
+
+</script>
+
 </script>
 
 </body>

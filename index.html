@@ -9,6 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
+        #loading {
+    position: fixed;
+    inset: 0;
+    background: #0f2027;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+    transition: opacity .6s;
+}
+
     body {
     margin: 0;
     font-family: 'Kanit', sans-serif;
@@ -144,12 +156,14 @@ body {
     </style>
 </head>
 <body>
-    <img src="loading.gif" alt="Loading">
-    <!-- Loading Screen -->
+
 <div id="loading">
-    <img src="loading.gif" alt="Loading">
-    <p>กำลังโหลดระบบ...</p>
+    <video autoplay muted loop playsinline width="180">
+        <source src="loading.mp4" type="video/mp4">
+    </video>
+    <p>กำลังโหลด...</p>
 </div>
+
 
 
  <div class="container">
@@ -197,13 +211,18 @@ updateClock();
 <script>
 window.addEventListener("load", () => {
     const loading = document.getElementById("loading");
-    loading.style.opacity = "0";
-    loading.style.pointerEvents = "none";
 
+    // ให้โชว์อย่างน้อย 3 วินาที
     setTimeout(() => {
-        loading.style.display = "none";
-    }, 600);
+        loading.style.opacity = "0";
+
+        setTimeout(() => {
+            loading.style.display = "none";
+        }, 600);
+
+    }, 3000); // ← เปลี่ยนเวลาตรงนี้
 });
+
 </script>
 
 </body>

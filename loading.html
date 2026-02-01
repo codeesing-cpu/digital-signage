@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Loading</title>
+</head>
+
+<body>
+
+    <!-- 🔥 ใส่วิดีโอตรงนี้ -->
+    <div id="loading">
+        <video autoplay muted playsinline width="300">
+            <source src="loading.mp4" type="video/mp4">
+        </video>
+        <p>Loading...</p>
+    </div>
+
+
+    <!-- 🔥 ใส่ script ไว้ล่างสุดก่อน </body> -->
+    <script>
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 3000);
+    </script>
+
+</body>
+</html>
