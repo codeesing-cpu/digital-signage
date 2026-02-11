@@ -120,59 +120,52 @@ button:hover{
 let events = JSON.parse(localStorage.getItem("events")) || [];
 const list = document.getElementById("list");
 
-function render(){
-    list.innerHTML = "";
+function render() {
+  list.innerHTML = "";
 
-    events.forEach((e,i)=>{
-        const div = document.createElement("div");
-        div.className = "card";
-
-      div.innerHTML = `
-<div class="card">
-    <h3>${e.title}</h3>
-    <p>${e.text}</p>
-    ${e.media || ""}
-    <br>
-    <button onclick="del(${i})">ลบ</button>
-</div>
-`;
-
-        list.appendChild(div);
-    });
+  events.forEach((e, i) => {
+    list.innerHTML += `
+      <div class="card">
+        <b>${e.title}</b>
+        <p>${e.text}</p>
+       ${e.media || ""}
+        <button onclick="del(${i})">ลบ</button>
+      </div>
+    `;
+  });
 }
+function del(i){
+  events.splice(i,1);
+  localStorage.setItem("events", JSON.stringify(events));
+  render();
+}
+
 
 function addEvent(){
-    const title = document.getElementById("title").value;
-    const text = document.getElementById("text").value;
-    const file = document.getElementById("media").files[0];
+  const title = document.getElementById("title").value;
+  const text = document.getElementById("text").value;
+  const file = document.getElementById("media").files[0];
 
-    let media = "";
+  let media = "";
 
-    if(file){
-        const url = URL.createObjectURL(file);
+  if(file){
+    const url = URL.createObjectURL(file);
 
-        if(file.type.startsWith("video")){
-            media = `<video controls src="${url}"></video>`;
-        }else{
-            media = `<img src="${url}">`;
-        }
+    if(file.type.startsWith("video")){
+      media = `<video controls src="${url}" width="300"></video>`;
+    } else {
+      media = `<img src="${url}" width="300">`;
     }
+  }
 
-    events.unshift({title,text,media});
-    localStorage.setItem("events", JSON.stringify(events));
+  events.unshift({title, text, media});
+  localStorage.setItem("events", JSON.stringify(events));
 
-    render();
+  render();
 
-    // เคลียร์ input
-    document.getElementById("title").value="";
-    document.getElementById("text").value="";
-    document.getElementById("media").value="";
-}
-
-function del(i){
-    events.splice(i,1);
-    localStorage.setItem("events", JSON.stringify(events));
-    render();
+  document.getElementById("title").value="";
+  document.getElementById("text").value="";
+  document.getElementById("media").value="";
 }
 
 render();

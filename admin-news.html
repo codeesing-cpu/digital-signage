@@ -78,39 +78,25 @@ button {
 
 <script>
 let news = JSON.parse(localStorage.getItem("news")) || [];
+
 const list = document.getElementById("list");
+const titleInput = document.getElementById("title");
+const textInput = document.getElementById("text");
+const mediaInput = document.getElementById("media");
+const preview = document.getElementById("preview");
 
 function render() {
     list.innerHTML = "";
+
     news.forEach((n, i) => {
-        list.innerHTML += `
+     list.innerHTML += `
         <div class="card">
             <b>${n.title}</b>
             <p>${n.text}</p>
+            ${n.media}
             <button onclick="del(${i})">🗑 ลบ</button>
         </div>`;
     });
-}
-
-function addNews() {
-    const title = titleInput.value;
-    const text = textInput.value;
-  const file = mediaInput.files[0];
-let media = "";
-
-if (file) {
-    const url = URL.createObjectURL(file);
-
-    if (file.type.startsWith("video")) {
-        media = `<video controls width="300" src="${url}"></video>`;
-    } else {
-        media = `<img width="300" src="${url}">`;
-    }
-}
-
-    news.unshift({ title, text, media });
-    localStorage.setItem("news", JSON.stringify(news));
-    render();
 }
 
 function addNews() {
@@ -121,15 +107,29 @@ function addNews() {
     let media = "";
 
     if (file) {
-        const url = URL.createObjectURL(file);
+        const reader = new FileReader();
 
-        if (file.type.startsWith("video")) {
-            media = `<video controls width="300" src="${url}"></video>`;
-        } else {
-            media = `<img width="300" src="${url}">`;
-        }
+        reader.onload = function(e) {
+            const base64 = e.target.result;
+
+
+           if(file.type.includes("video")){
+                media = `<video controls width="300" src="${base64}"></video>`;
+            } else {
+                media = `<img width="300" src="${base64}">`;
+            }
+
+            saveNews(title, text, media);
+        };
+
+        reader.readAsDataURL(file);
+
+    } else {
+        saveNews(title, text, "");
     }
+}
 
+function saveNews(title, text, media){
     news.unshift({ title, text, media });
 
     localStorage.setItem("news", JSON.stringify(news));
@@ -139,24 +139,44 @@ function addNews() {
     titleInput.value = "";
     textInput.value = "";
     mediaInput.value = "";
+    preview.style.display = "none";
 }
-/* ====== วางตรงนี้ ====== */
 
-const preview = document.getElementById("preview");
+function del(i) {
+    news.splice(i, 1);
+    localStorage.setItem("news", JSON.stringify(news));
+    render();
+}
 
 mediaInput.addEventListener("change", function () {
-    const file = this.files[0];
+    const file = mediaInput.files[0];
 
-    if (file && file.type.startsWith("image")) {
-        preview.src = URL.createObjectURL(file);
-        preview.style.display = "block";
-    } else {
-        preview.style.display = "none";
-    }
+    
+if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const base64 = e.target.result;
+
+        if (file.type.includes("video")) {
+            media = `<video controls width="300" src="${base64}"></video>`;
+        } else {
+            media = `<img width="300" src="${base64}">`;
+        }
+
+        saveNews(title, text, media);
+    };
+
+    reader.readAsDataURL(file);
+
+} else {
+    saveNews(title, text, "");
+}
+
+
 });
 
-</script>
-
+render();
 </script>
 
 </body>

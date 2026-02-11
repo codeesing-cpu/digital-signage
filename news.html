@@ -43,19 +43,23 @@ body {
 </div>
 
 <script>
+
 const news = JSON.parse(localStorage.getItem("news")) || [];
 const list = document.getElementById("newsList");
 
 news.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = `
-        <h3>${item.title}</h3>
-        <p>${item.text}</p>
-        ${item.media ? item.media : ""}
-    `;
-    list.appendChild(div);
+  const div = document.createElement("div");
+  div.className = "card";
+
+ div.innerHTML = `
+    <h3>${item.title}</h3>
+    <p>${item.text}</p>
+    ${item.media}
+`;
+
+  list.appendChild(div);
 });
+
 </script>
 
 </body>
