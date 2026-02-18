@@ -20,12 +20,17 @@
 }
 
 body{
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
     margin:0;
-    padding:0;
+    min-height:100vh;
+    font-family: Arial, sans-serif;
     color:white;
+
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
 
 /* กล่องหลัก */
 .container{
@@ -149,19 +154,30 @@ function addEvent(){
   let media = "";
 
   if(file){
-    const url = URL.createObjectURL(file);
+    const reader = new FileReader();
 
-    if(file.type.startsWith("video")){
-      media = `<video controls src="${url}" width="300"></video>`;
-    } else {
-      media = `<img src="${url}" width="300">`;
-    }
-  }
+    reader.onload = function(e){
+        const base64 = e.target.result;
 
-  events.unshift({title, text, media});
-  localStorage.setItem("events", JSON.stringify(events));
+        if(file.type.startsWith("video")){
+            media = `<video controls src="${base64}" width="300"></video>`;
+        } else {
+         media = `
+<img src="${base64}" width="300"
+     style="cursor:pointer"
+     onclick="openImage('${base64}')">
+`;
 
-  render();
+        }
+
+        events.unshift({title, text, media});
+        localStorage.setItem("events", JSON.stringify(events));
+        render();
+    };
+
+    reader.readAsDataURL(file);
+    return; 
+}
 
   document.getElementById("title").value="";
   document.getElementById("text").value="";

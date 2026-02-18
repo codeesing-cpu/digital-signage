@@ -5,6 +5,7 @@
 <title>ข่าวประกาศ</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+    
 body {
     margin: 0;
     font-family: Kanit, sans-serif;
@@ -32,6 +33,45 @@ body {
     margin-top: 20px;
     color: #00c6ff;
 }
+.modal{
+  display:none;
+  position:fixed;
+  z-index:1000;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  text-align:center;
+}
+
+.modal-content{
+  max-width:90%;
+  max-height:80%;
+  margin-top:40px;
+  border-radius:15px;
+}
+
+.close{
+  position:absolute;
+  top:20px;
+  right:40px;
+  color:white;
+  font-size:40px;
+  cursor:pointer;
+}
+
+.download-btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 25px;
+  background:#00c6ff;
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  font-weight:bold;
+}
+
 </style>
 </head>
 <body>
@@ -43,6 +83,15 @@ body {
 </div>
 
 <script>
+function openImage(src){
+  document.getElementById("imageModal").style.display = "block";
+  document.getElementById("modalImg").src = src;
+  document.getElementById("downloadBtn").href = src;
+}
+
+function closeImage(){
+  document.getElementById("imageModal").style.display = "none";
+}
 
 const news = JSON.parse(localStorage.getItem("news")) || [];
 const list = document.getElementById("newsList");
@@ -61,6 +110,15 @@ news.forEach(item => {
 });
 
 </script>
+<div id="imageModal" class="modal">
+  <span class="close" onclick="closeImage()">&times;</span>
+  
+  <img class="modal-content" id="modalImg">
+
+  <a id="downloadBtn" class="download-btn" download="image.jpg">
+    ⬇ ดาวน์โหลดรูป
+  </a>
+</div>
 
 </body>
 </html>

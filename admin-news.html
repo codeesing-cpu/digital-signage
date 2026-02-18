@@ -2,182 +2,235 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>จัดการข่าว</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>จัดการข่าวประกาศ</title>
+
 <style>
-    .btn{
-    display:inline-block;
-    padding:10px 18px;
-    background:linear-gradient(135deg,#667eea,#764ba2);
+body{
+    margin:0;
+    min-height:100vh;
+    font-family: Arial, sans-serif;
     color:white;
-    border-radius:10px;
-    text-decoration:none;
-    margin-bottom:15px;
-    transition:.2s;
-}
-.btn:hover{
-    transform:scale(1.05);
+
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-body {
-    font-family: Kanit, sans-serif;
-    background: #16222a;
-    color: white;
-    margin: 0;
+
+.container{
+    max-width:900px;
+    margin:auto;
 }
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
+
+h1{
+    margin-bottom:20px;
 }
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    border: none;
+
+.top-buttons{
+    margin-bottom:20px;
 }
-button {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    background: #00c6ff;
-    color: black;
-    cursor: pointer;
+
+.top-buttons a{
+    text-decoration:none;
+    padding:8px 15px;
+    border-radius:8px;
+    background:#6c63ff;
+    color:white;
+    margin-right:10px;
 }
-.card {
-    background: rgba(255,255,255,0.1);
-    padding: 15px;
-    border-radius: 15px;
-    margin-top: 15px;
+
+input, textarea{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:8px;
+    border:none;
 }
+
+button{
+    padding:10px 18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.add-btn{
+    background:#00c6ff;
+    color:white;
+}
+
+.card{
+    background:#1e2a38;
+    padding:15px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+.card button{
+    background:#ff4d4d;
+    color:white;
+    margin-top:10px;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  text-align: center;
+}
+
+.modal-content {
+  max-width: 90%;
+  max-height: 80%;
+  margin-top: 40px;
+  border-radius: 15px;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.download-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 25px;
+  background: #00c6ff;
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 18px;
+}
+
 </style>
 </head>
+
 <body>
 
 <div class="container">
+
 <h1>🛠 จัดการข่าวประกาศ</h1>
 
-
-    <!-- ✅ เพิ่มตรงนี้ -->
-    <a href="admin-events.html" class="btn">📅 ไปหน้าจัดการกิจกรรม</a>
-
+<div class="top-buttons">
+    <a href="admin-events.html">📅 ไปหน้าจัดการกิจกรรม</a>
+    <a href="menu.html">⬅ กลับหน้าหลัก</a>
+</div>
 
 <input id="title" placeholder="หัวข้อข่าว">
 <textarea id="text" placeholder="รายละเอียดข่าว"></textarea>
 <input type="file" id="media" accept="image/*,video/*">
-<img id="preview"
-     style="width:300px; display:none; border-radius:10px; margin-top:10px;">
 
-<button onclick="addNews()">➕ เพิ่มข่าว</button>
+<button class="add-btn" onclick="addNews()">➕ เพิ่มข่าว</button>
 
 <div id="list"></div>
 
-<a href="menu.html">⬅ กลับเมนู</a>
 </div>
 
 <script>
+    function openImage(src){
+  document.getElementById("imageModal").style.display = "block";
+  document.getElementById("modalImg").src = src;
+  document.getElementById("downloadBtn").href = src;
+}
+
+function closeImage(){
+  document.getElementById("imageModal").style.display = "none";
+}
+
 let news = JSON.parse(localStorage.getItem("news")) || [];
-
 const list = document.getElementById("list");
-const titleInput = document.getElementById("title");
-const textInput = document.getElementById("text");
-const mediaInput = document.getElementById("media");
-const preview = document.getElementById("preview");
 
-function render() {
+function render(){
     list.innerHTML = "";
 
-    news.forEach((n, i) => {
-     list.innerHTML += `
+    news.forEach((n,i)=>{
+        list.innerHTML += `
         <div class="card">
-            <b>${n.title}</b>
+            <h3>${n.title}</h3>
             <p>${n.text}</p>
-            ${n.media}
-            <button onclick="del(${i})">🗑 ลบ</button>
-        </div>`;
+            ${n.media || ""}
+            <br>
+            <button onclick="del(${i})">ลบ</button>
+        </div>
+        `;
     });
 }
 
-function addNews() {
-    const title = titleInput.value;
-    const text = textInput.value;
-    const file = mediaInput.files[0];
+function addNews(){
+    const title = document.getElementById("title").value;
+    const text = document.getElementById("text").value;
+    const file = document.getElementById("media").files[0];
 
-    let media = "";
+    if(!title || !text){
+        alert("กรอกข้อมูลให้ครบ");
+        return;
+    }
 
-    if (file) {
+    if(file){
         const reader = new FileReader();
 
-        reader.onload = function(e) {
-            const base64 = e.target.result;
+        reader.onload = function(e){
+            let media;
 
+            if(file.type.startsWith("video")){
+                media = `<video controls width="300" src="${e.target.result}"></video>`;
+            }else{
+            media = `
+<img width="300"
+     style="cursor:pointer;border-radius:10px;"
+     src="${e.target.result}"
+     onclick="openImage('${e.target.result}')">
+`;
 
-           if(file.type.includes("video")){
-                media = `<video controls width="300" src="${base64}"></video>`;
-            } else {
-                media = `<img width="300" src="${base64}">`;
             }
 
-            saveNews(title, text, media);
+            saveNews(title,text,media);
         };
 
         reader.readAsDataURL(file);
-
-    } else {
-        saveNews(title, text, "");
+    }else{
+        saveNews(title,text,"");
     }
 }
 
-function saveNews(title, text, media){
-    news.unshift({ title, text, media });
-
-    localStorage.setItem("news", JSON.stringify(news));
-
+function saveNews(title,text,media){
+    news.unshift({title,text,media});
+    localStorage.setItem("news",JSON.stringify(news));
     render();
 
-    titleInput.value = "";
-    textInput.value = "";
-    mediaInput.value = "";
-    preview.style.display = "none";
+    document.getElementById("title").value="";
+    document.getElementById("text").value="";
+    document.getElementById("media").value="";
 }
 
-function del(i) {
-    news.splice(i, 1);
-    localStorage.setItem("news", JSON.stringify(news));
+function del(i){
+    news.splice(i,1);
+    localStorage.setItem("news",JSON.stringify(news));
     render();
 }
-
-mediaInput.addEventListener("change", function () {
-    const file = mediaInput.files[0];
-
-    
-if (file) {
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-        const base64 = e.target.result;
-
-        if (file.type.includes("video")) {
-            media = `<video controls width="300" src="${base64}"></video>`;
-        } else {
-            media = `<img width="300" src="${base64}">`;
-        }
-
-        saveNews(title, text, media);
-    };
-
-    reader.readAsDataURL(file);
-
-} else {
-    saveNews(title, text, "");
-}
-
-
-});
 
 render();
 </script>
+<div id="imageModal" class="modal">
+  <span class="close" onclick="closeImage()">&times;</span>
+
+  <img class="modal-content" id="modalImg">
+
+  <a id="downloadBtn"
+     class="download-btn"
+     download="image.jpg">
+     ⬇ ดาวน์โหลดรูป
+  </a>
+</div>
 
 </body>
 </html>
