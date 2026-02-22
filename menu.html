@@ -98,10 +98,50 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+
+
+.image-button {
+    position: relative;
+    display: inline-block;
+    margin: 40px 20px;
+    text-align: center;
+}
+
+.main-btn {
+    display: inline-block;
+     width: 200px;          /* 👈 เพิ่มบรรทัดนี้ */
+    padding: 12px 0;       /* ปรับ padding */
+    background: #2f80ed;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 18px;
+    position: relative;
+    z-index: 1;
+    transition: 0.3s;
+}
+
+.btn-image {
+    position: absolute;
+    width: 80px;
+    top: -60px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    transition: 0.3s;
+}
+.image-button:hover .btn-image {
+    transform: translate(-50%, -10px);
+}
+.image-button:hover .main-btn {
+    transform: scale(1.05);
+}
     </style>
     
 </head>
 <body>
+    <script>
+
+</script>
 <div class="bg-shape bg1"></div>
 <div class="bg-shape bg2"></div>
 
@@ -109,8 +149,15 @@
     <h1>เมนูประชาสัมพันธ์</h1>
 
     <div class="menu">
-      <a href="news.html">📢 ข่าวประกาศ</a>
-      <a href="events.html">📅 ตารางกิจกรรม</a>
+     <div class="image-button">
+    <img src="image67.png" class="btn-image">
+    <a href="news.html" class="main-btn">ข่าวประกาศ</a>
+</div>
+
+<div class="image-button">
+    <img src="image67.png" class="btn-image">
+    <a href="events.html" class="main-btn">กิจกรรม</a>
+</div>
 
    <a href="creator.html" class="full">📞 ผู้จัดทำเว็ปไซค์</a>
     </div>
