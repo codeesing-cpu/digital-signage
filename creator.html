@@ -84,6 +84,77 @@ h1{
         align-items:center;
     }
 }
+/* รีเซ็ตพื้นฐาน */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 15px;
+    font-family: sans-serif;
+}
+
+/* กล่องกลาง */
+.container {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+/* การ์ด */
+.card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+/* ปุ่ม */
+button, .btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+/* รูปโปรไฟล์ */
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ฟอร์ม */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+/* Responsive สำหรับจอเล็กมาก */
+@media (max-width: 480px) {
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .profile-img {
+        width: 90px;
+        height: 90px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+.profile-card {
+    text-align: center;
+    padding: 20px;
+}
 </style>
 </head>
 
